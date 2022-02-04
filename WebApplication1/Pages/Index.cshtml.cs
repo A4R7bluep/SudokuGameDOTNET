@@ -119,8 +119,8 @@ public class Nonet
 public class Board 
 {
     private object[,] main = {
-        {new Nonet(), new Nonet(), new Nonet()}, //    a1, a2, a3
-        {new Nonet(), new Nonet(), new Nonet()}, //    b1, b2, b3
-        {new Nonet(), new Nonet(), new Nonet()}  //    c1, c2, c3
+        {new Nonet(), new Nonet(), new Nonet()}, //    1a, 2a, 3a
+        {new Nonet(), new Nonet(), new Nonet()}, //    1b, 2b, 3b
+        {new Nonet(), new Nonet(), new Nonet()}  //    1c, 2c, 3c
     };
 }
