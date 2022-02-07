@@ -72,7 +72,7 @@ public class Nonet
     public int get_space_value(string space)
     {
         int retVal = 0;
-        
+
         switch (space)
         {
             case "1a":
@@ -116,11 +116,29 @@ public class Nonet
     }
 }
 
-public class Board 
+public class Board
 {
-    private object[,] main = {
-        {new Nonet(), new Nonet(), new Nonet()}, //    1a, 2a, 3a
-        {new Nonet(), new Nonet(), new Nonet()}, //    1b, 2b, 3b
-        {new Nonet(), new Nonet(), new Nonet()}  //    1c, 2c, 3c
-    };
+    private Nonet[,] main = { { }, { }, { } };
+
+    public Board()
+    {
+        for (int y = 0; y < 3; y++)
+        {
+            for (int x = 0; x < 3; x++)
+            {
+                main[0, 0] = new Nonet();
+            }
+        }
+
+        Console.WriteLine(main);
+    }
+
+    //    1a, 2a, 3a
+    //    1b, 2b, 3b
+    //    1c, 2c, 3c
+
+    public string get_nonet_value()
+    {
+        return "";
+    }
 }
