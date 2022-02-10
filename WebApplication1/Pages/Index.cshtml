@@ -123,8 +123,12 @@
         //    1b, 2b, 3b
         //    1c, 2c, 3c
 
-        public string get_nonet_value()
+        public string get_nonet_value(int space1, int space2)
         {
+            Nonet currentNonet = null;
+
+            currentNonet = main[space1 / 3, space2 / 3];
+
             return "a";
         }
     }
@@ -151,7 +155,7 @@
 
 <table id="board">
     <tr id="row1">
-        <td>@board.get_nonet_value()</td>
+        <td>@board.get_nonet_value(8, 7)</td>
         <td>0</td>
         <td>0</td>
         <td>0</td>
