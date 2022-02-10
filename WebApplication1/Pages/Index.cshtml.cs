@@ -18,7 +18,7 @@ namespace WebApplication1.Pages
         }
     }
 }
-
+/*
 public class Nonet
 {
     private int[,] area = {
@@ -118,7 +118,7 @@ public class Nonet
 
 public class Board
 {
-    private Nonet[,] main = { { }, { }, { } };
+    private Nonet[,] main = { { null, null, null }, { null, null, null }, { null, null, null } };
 
     public Board()
     {
@@ -139,6 +139,7 @@ public class Board
 
     public string get_nonet_value()
     {
-        return "";
+        return "a";
     }
 }
+*/
