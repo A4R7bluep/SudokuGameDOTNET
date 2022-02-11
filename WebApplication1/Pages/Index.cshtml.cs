@@ -16,6 +16,28 @@ namespace WebApplication1.Pages
         {
 
         }
+
+        public void OnGetTest()
+        {
+
+        }
+
+        public string popupDisplay = "";
+        public void OnGetDisplayPopup(int type)
+        {
+            switch (type)
+            {
+                case 0:
+                    popupDisplay = "display: block;";
+                    break;
+
+                case 1:
+                    popupDisplay = "";
+                    break;
+            }
+
+            Console.WriteLine("TTTTTTTTTT");
+        }
     }
 }
 /*

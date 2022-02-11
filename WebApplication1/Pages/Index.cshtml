@@ -5,6 +5,13 @@
 }
 
 @functions {
+    public void test2()
+    {
+        Console.WriteLine("Tsssshshshsasht");
+    }
+
+    public string popupDisplay = "";
+
     string get_styles(int spaceX, int spaceY)
     {
         string style = "";
@@ -21,6 +28,22 @@
         if ((nonetX + nonetY) % 2 == 1) style += "background-color: darkgray; ";
 
         return style;
+    }
+
+    public void display_popup(int type)
+    {
+        switch (type)
+        {
+            case 0:
+                popupDisplay = "display: block;";
+                break;
+
+            case 1:
+                popupDisplay = "";
+                break;
+        }
+
+        Console.WriteLine("TTTTTTTTTT");
     }
 
     public class Nonet
@@ -115,7 +138,6 @@
 
     string Send()
     {
-        Console.WriteLine(board);
         return "";
     }
 
@@ -128,6 +150,11 @@
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
 -->
+
+<div id="popup" style="@popupDisplay">
+</div>
+
+<a asp-page="Index" asp-page-handler="test">text</a>
 
 <table id="board">
     <tr id="row1">
@@ -248,5 +275,16 @@
     button {
         border: none;
         background-color: inherit;
+    }
+
+    #popup {
+        position: absolute;
+        display: none;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        top: 0;
+        left: 0;
+        z-index: 100;
     }
 </style>
