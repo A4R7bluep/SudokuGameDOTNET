@@ -129,9 +129,19 @@
 </div>
 -->
 
+<script>
+    function on_button_click() {
+        document.getElementById("popup").style.display = "block";
+    }
+</script>
+
+<div id="popup">
+    
+</div>
+
 <table id="board">
     <tr id="row1">
-        <td style="@get_styles(0, 0)"><button>@board.get_nonet_value(0, 0)</button></td>
+        <td style="@get_styles(0, 0)"><button onclick="on_button_click()">@board.get_nonet_value(0, 0)</button></td>
         <td style="@get_styles(0, 1)"><button>@board.get_nonet_value(0, 1)</button></td>
         <td style="@get_styles(0, 2)"><button>@board.get_nonet_value(0, 2)</button></td>
         <td style="@get_styles(0, 3)"><button>@board.get_nonet_value(0, 3)</button></td>
@@ -248,5 +258,16 @@
     button {
         border: none;
         background-color: inherit;
+    }
+
+    #popup {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 100;
+        width: 100%;
+        height: 100%;
     }
 </style>
