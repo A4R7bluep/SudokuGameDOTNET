@@ -5,17 +5,34 @@
 }
 
 @functions {
+
+    /*
+     * This is the C# that manages the data entered from the website
+     * 
+     * It contains the functions:
+     *     test,
+     *     get_styles
+     * 
+     * It also contains the classes:
+     *     Board, 
+     *     Nonet
+     */
+
     string currentSpace = "";
 
-    public void test2()
+    public void test(string testCode)
     {
-        Console.WriteLine("Tsssshshshsasht");
+        // Used for testing whether something works
+
+        Console.WriteLine(testCode);
     }
 
     public string popupDisplay = "";
 
     string get_styles(int spaceX, int spaceY)
     {
+        // This function actually sets the styles for the table cells based on where in the board and nonet it is
+
         string style = "";
 
         if (spaceY % 3 == 0) style += "border-left: 3px solid black; ";
@@ -32,24 +49,10 @@
         return style;
     }
 
-    public void display_popup(int type)
-    {
-        switch (type)
-        {
-            case 0:
-                popupDisplay = "display: block;";
-                break;
-
-            case 1:
-                popupDisplay = "";
-                break;
-        }
-
-        Console.WriteLine("TTTTTTTTTT");
-    }
-
     public class Nonet
     {
+        // The Nonet class is embeded into the board. This separates the values by the 3x3 squares
+
         private int[,] area = {
             {0, 0, 0}, //    1a, 2a, 3a
             {0, 0, 0}, //    1b, 2b, 3b
@@ -106,10 +109,15 @@
 
     public class Board
     {
+        // The board class holds all of the board spaces in the "main" array. It holds a 3x3 of Nonets. 
+        // It calls the functions on those nonets
+
         private Nonet[,] main = { { null, null, null }, { null, null, null }, { null, null, null } };
 
         public Board()
         {
+            // The constructor for the Board class. It instantiates and adds the nonets into the array, main.
+
             for (int y = 0; y < 3; y++)
             {
                 for (int x = 0; x < 3; x++)
@@ -125,6 +133,9 @@
 
         public string get_nonet_value(int space1, int space2)
         {
+            // Returns the value of the space inputed. Finds the correct nonet for the space before 
+            // calling the nonet function to get the value.
+
             Nonet currentNonet = null;
 
             currentNonet = main[space1 / 3, space2 / 3];
@@ -137,13 +148,14 @@
 
 @{
     Board board = new Board();
-
+    /*
     string Send()
     {
         return "";
     }
 
     string main = Send();
+    */
 }
 
 <!--
@@ -153,21 +165,42 @@
 </div>
 -->
 
+<!--
+    =========================================
+    This is the javascript that manages whether the popup is displayed or not
+    =========================================
+-->
+
 <script>
+    var currentSpaceX = 0;
+    var currentSpaceY = 0;
+
     function open_button_click(x, y) 
     {
         document.getElementById("popup").style.display = "block";
+        currentSpaceX = x;
+        currentSpaceY = y;
     }
 
     function close_button_click() 
     {
         document.getElementById("popup").style.display = "none";
+        currentSpaceX = 0;
+        currentSpaceY = 0;
     }
 
     function input_button_clicked(number) {
 
     } 
 </script>
+
+<!--
+    =========================================
+    The popup is where you enter numbers
+
+    There is a number pad and you click the number to input it
+    =========================================
+-->
 
 <div id="popup">
     <table id="inputTable">
@@ -189,6 +222,14 @@
     </table>
     <button id="cancelButton" onclick="close_button_click()">Cancel</button>
 </div>
+
+<!--
+    =========================================
+    The main board
+
+    This is the area that shows all of the numbers
+    =========================================
+-->
 
 <table id="board">
     <tr id="row1">
