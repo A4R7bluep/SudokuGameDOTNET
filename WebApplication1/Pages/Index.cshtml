@@ -2,6 +2,12 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
+
+    /*
+    if (IsPost)
+    {
+        
+    }*/
 }
 
 @functions {
@@ -203,23 +209,25 @@
 -->
 
 <div id="popup">
-    <table id="inputTable">
-        <tr>
-            <td><button>1</button></td>
-            <td><button>2</button></td>
-            <td><button>3</button></td>
-        </tr>
-        <tr>
-            <td><button>4</button></td>
-            <td><button>5</button></td>
-            <td><button>6</button></td>
-        </tr>
-        <tr>
-            <td><button>7</button></td>
-            <td><button>8</button></td>
-            <td><button>9</button></td>
-        </tr>
-    </table>
+    <form method="post">
+        <table id="inputTable">
+            <tr>
+                <td><input type="radio" value="1" class="inputButton" name="inputNumber">
+                <td><input type="radio" value="2" class="inputButton" name="inputNumber">
+                <td><input type="radio" value="3" class="inputButton" name="inputNumber">
+            </tr>
+            <tr>
+                <td><input type="radio" value="4" class="inputButton" name="inputNumber">
+                <td><input type="radio" value="5" class="inputButton" name="inputNumber">
+                <td><input type="radio" value="6" class="inputButton" name="inputNumber">
+            </tr>
+            <tr>
+                <td><input type="radio" value="7" class="inputButton" name="inputNumber">
+                <td><input type="radio" value="8" class="inputButton" name="inputNumber">
+                <td><input type="radio" value="9" class="inputButton" name="inputNumber">
+            </tr>
+        </table>
+    </form>
     <button id="cancelButton" onclick="close_button_click()">Cancel</button>
 </div>
 
@@ -378,5 +386,10 @@
         margin-left: auto;
         margin-right: auto;
         margin-top: 100px;
+    }
+
+    .inputButton {
+        border: none;
+        background-color: inherit;
     }
 </style>
