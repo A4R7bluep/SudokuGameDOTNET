@@ -3,11 +3,7 @@
 @{
     ViewData["Title"] = "Home page";
 
-    /*
-    if (IsPost)
-    {
-        
-    }*/
+    
 }
 
 @functions {
@@ -35,125 +31,9 @@
 
     public string popupDisplay = "";
 
-    string get_styles(int spaceX, int spaceY)
-    {
-        // This function actually sets the styles for the table cells based on where in the board and nonet it is
-
-        string style = "";
-
-        if (spaceY % 3 == 0) style += "border-left: 3px solid black; ";
-        if (spaceY % 3 == 2) style += "border-right: 3px solid black; ; ";
-        if (spaceX % 3 == 0) style += "border-top: 3px solid black; ";
-        if (spaceX % 3 == 2) style += "border-bottom: 3px solid black; ";
-
-        int nonetX = spaceX / 3;
-        int nonetY = spaceY / 3;
-
-        if ((nonetX + nonetY) % 2 == 0) style += "background-color: gray; ";
-        if ((nonetX + nonetY) % 2 == 1) style += "background-color: darkgray; ";
-
-        return style;
-    }
-
-    public class Nonet
-    {
-        // The Nonet class is embeded into the board. This separates the values by the 3x3 squares
-
-        private int[,] area = {
-            {0, 0, 0}, //    1a, 2a, 3a
-            {0, 0, 0}, //    1b, 2b, 3b
-            {0, 0, 0}  //    1c, 2c, 3c
-        };
-
-        public void set_space_value(string space, int value)
-        {
-            switch (space)
-            {
-                case "1a":
-                    area[0, 0] = value;
-                    break;
-
-                case "2a":
-                    area[0, 1] = value;
-                    break;
-
-                case "3a":
-                    area[0, 2] = value;
-                    break;
-
-                case "1b":
-                    area[1, 0] = value;
-                    break;
-
-                case "2b":
-                    area[1, 1] = value;
-                    break;
-
-                case "3b":
-                    area[1, 2] = value;
-                    break;
-
-                case "1c":
-                    area[2, 0] = value;
-                    break;
-
-                case "2c":
-                    area[2, 1] = value;
-                    break;
-
-                case "3c":
-                    area[2, 2] = value;
-                    break;
-            }
-        }
-
-        public int get_space_value(int spaceX, int spaceY)
-        {
-            return area[spaceX, spaceY];
-        }
-    }
-
-    public class Board
-    {
-        // The board class holds all of the board spaces in the "main" array. It holds a 3x3 of Nonets. 
-        // It calls the functions on those nonets
-
-        private Nonet[,] main = { { null, null, null }, { null, null, null }, { null, null, null } };
-
-        public Board()
-        {
-            // The constructor for the Board class. It instantiates and adds the nonets into the array, main.
-
-            for (int y = 0; y < 3; y++)
-            {
-                for (int x = 0; x < 3; x++)
-                {
-                    main[x, y] = new Nonet();
-                }
-            }
-        }
-
-        //    1a, 2a, 3a
-        //    1b, 2b, 3b
-        //    1c, 2c, 3c
-
-        public string get_nonet_value(int space1, int space2)
-        {
-            // Returns the value of the space inputed. Finds the correct nonet for the space before 
-            // calling the nonet function to get the value.
-
-            Nonet currentNonet = null;
-
-            currentNonet = main[space1 / 3, space2 / 3];
-            string value = (currentNonet.get_space_value(space1 % 3, space2 % 3)).ToString();
-
-            return value;
-        }
-    }
 }
 
 @{
-    Board board = new Board();
     /*
     string Send()
     {
@@ -209,7 +89,7 @@
 -->
 
 <div id="popup">
-    <form method="post">
+    <form method="post" action="">
         <table id="inputTable">
             <tr>
                 <td><input type="radio" value="1" class="inputButton" name="inputNumber">
@@ -227,8 +107,8 @@
                 <td><input type="radio" value="9" class="inputButton" name="inputNumber">
             </tr>
         </table>
+        <input type="submit" id="cancelButton" value="cancel" />
     </form>
-    <button id="cancelButton" onclick="close_button_click()">Cancel</button>
 </div>
 
 <!--
@@ -241,103 +121,103 @@
 
 <table id="board">
     <tr id="row1">
-        <td style="@get_styles(0, 0)"><button onclick="open_button_click(0, 0)">@board.get_nonet_value(0, 0)</button></td>
-        <td style="@get_styles(0, 1)"><button onclick="open_button_click()">@board.get_nonet_value(0, 1)</button></td>
-        <td style="@get_styles(0, 2)"><button onclick="open_button_click()">@board.get_nonet_value(0, 2)</button></td>
-        <td style="@get_styles(0, 3)"><button onclick="open_button_click()">@board.get_nonet_value(0, 3)</button></td>
-        <td style="@get_styles(0, 4)"><button onclick="open_button_click()">@board.get_nonet_value(0, 4)</button></td>
-        <td style="@get_styles(0, 5)"><button onclick="open_button_click()">@board.get_nonet_value(0, 5)</button></td>
-        <td style="@get_styles(0, 6)"><button onclick="open_button_click()">@board.get_nonet_value(0, 6)</button></td>
-        <td style="@get_styles(0, 7)"><button onclick="open_button_click()">@board.get_nonet_value(0, 7)</button></td>
-        <td style="@get_styles(0, 8)"><button onclick="open_button_click()">@board.get_nonet_value(0, 8)</button></td>
+        <td style="@Model.get_styles(0, 0)"><button onclick="open_button_click(0, 0)">@Model.board.get_nonet_value(0, 0)</button></td>
+        <td style="@Model.get_styles(0, 1)"><button onclick="open_button_click()">@Model.board.get_nonet_value(0, 1)</button></td>
+        <td style="@Model.get_styles(0, 2)"><button onclick="open_button_click()">@Model.board.get_nonet_value(0, 2)</button></td>
+        <td style="@Model.get_styles(0, 3)"><button onclick="open_button_click()">@Model.board.get_nonet_value(0, 3)</button></td>
+        <td style="@Model.get_styles(0, 4)"><button onclick="open_button_click()">@Model.board.get_nonet_value(0, 4)</button></td>
+        <td style="@Model.get_styles(0, 5)"><button onclick="open_button_click()">@Model.board.get_nonet_value(0, 5)</button></td>
+        <td style="@Model.get_styles(0, 6)"><button onclick="open_button_click()">@Model.board.get_nonet_value(0, 6)</button></td>
+        <td style="@Model.get_styles(0, 7)"><button onclick="open_button_click()">@Model.board.get_nonet_value(0, 7)</button></td>
+        <td style="@Model.get_styles(0, 8)"><button onclick="open_button_click()">@Model.board.get_nonet_value(0, 8)</button></td>
     </tr>
     <tr id="row2">
-        <td style="@get_styles(1, 0)"><button onclick="open_button_click()">@board.get_nonet_value(1, 0)</button></td>
-        <td style="@get_styles(1, 1)"><button onclick="open_button_click()">@board.get_nonet_value(1, 1)</button></td>
-        <td style="@get_styles(1, 2)"><button onclick="open_button_click()">@board.get_nonet_value(1, 2)</button></td>
-        <td style="@get_styles(1, 3)"><button onclick="open_button_click()">@board.get_nonet_value(1, 3)</button></td>
-        <td style="@get_styles(1, 4)"><button onclick="open_button_click()">@board.get_nonet_value(1, 4)</button></td>
-        <td style="@get_styles(1, 5)"><button onclick="open_button_click()">@board.get_nonet_value(1, 5)</button></td>
-        <td style="@get_styles(1, 6)"><button onclick="open_button_click()">@board.get_nonet_value(1, 6)</button></td>
-        <td style="@get_styles(1, 7)"><button onclick="open_button_click()">@board.get_nonet_value(1, 7)</button></td>
-        <td style="@get_styles(1, 8)"><button onclick="open_button_click()">@board.get_nonet_value(1, 8)</button></td>
+        <td style="@Model.get_styles(1, 0)"><button onclick="open_button_click()">@Model.board.get_nonet_value(1, 0)</button></td>
+        <td style="@Model.get_styles(1, 1)"><button onclick="open_button_click()">@Model.board.get_nonet_value(1, 1)</button></td>
+        <td style="@Model.get_styles(1, 2)"><button onclick="open_button_click()">@Model.board.get_nonet_value(1, 2)</button></td>
+        <td style="@Model.get_styles(1, 3)"><button onclick="open_button_click()">@Model.board.get_nonet_value(1, 3)</button></td>
+        <td style="@Model.get_styles(1, 4)"><button onclick="open_button_click()">@Model.board.get_nonet_value(1, 4)</button></td>
+        <td style="@Model.get_styles(1, 5)"><button onclick="open_button_click()">@Model.board.get_nonet_value(1, 5)</button></td>
+        <td style="@Model.get_styles(1, 6)"><button onclick="open_button_click()">@Model.board.get_nonet_value(1, 6)</button></td>
+        <td style="@Model.get_styles(1, 7)"><button onclick="open_button_click()">@Model.board.get_nonet_value(1, 7)</button></td>
+        <td style="@Model.get_styles(1, 8)"><button onclick="open_button_click()">@Model.board.get_nonet_value(1, 8)</button></td>
     </tr>
     <tr id="row3">
-        <td style="@get_styles(2, 0)"><button onclick="open_button_click()">@board.get_nonet_value(2, 0)</button></td>
-        <td style="@get_styles(2, 1)"><button onclick="open_button_click()">@board.get_nonet_value(2, 1)</button></td>
-        <td style="@get_styles(2, 2)"><button onclick="open_button_click()">@board.get_nonet_value(2, 2)</button></td>
-        <td style="@get_styles(2, 3)"><button onclick="open_button_click()">@board.get_nonet_value(2, 3)</button></td>
-        <td style="@get_styles(2, 4)"><button onclick="open_button_click()">@board.get_nonet_value(2, 4)</button></td>
-        <td style="@get_styles(2, 5)"><button onclick="open_button_click()">@board.get_nonet_value(2, 5)</button></td>
-        <td style="@get_styles(2, 6)"><button onclick="open_button_click()">@board.get_nonet_value(2, 6)</button></td>
-        <td style="@get_styles(2, 7)"><button onclick="open_button_click()">@board.get_nonet_value(2, 7)</button></td>
-        <td style="@get_styles(2, 8)"><button onclick="open_button_click()">@board.get_nonet_value(2, 8)</button></td>
+        <td style="@Model.get_styles(2, 0)"><button onclick="open_button_click()">@Model.board.get_nonet_value(2, 0)</button></td>
+        <td style="@Model.get_styles(2, 1)"><button onclick="open_button_click()">@Model.board.get_nonet_value(2, 1)</button></td>
+        <td style="@Model.get_styles(2, 2)"><button onclick="open_button_click()">@Model.board.get_nonet_value(2, 2)</button></td>
+        <td style="@Model.get_styles(2, 3)"><button onclick="open_button_click()">@Model.board.get_nonet_value(2, 3)</button></td>
+        <td style="@Model.get_styles(2, 4)"><button onclick="open_button_click()">@Model.board.get_nonet_value(2, 4)</button></td>
+        <td style="@Model.get_styles(2, 5)"><button onclick="open_button_click()">@Model.board.get_nonet_value(2, 5)</button></td>
+        <td style="@Model.get_styles(2, 6)"><button onclick="open_button_click()">@Model.board.get_nonet_value(2, 6)</button></td>
+        <td style="@Model.get_styles(2, 7)"><button onclick="open_button_click()">@Model.board.get_nonet_value(2, 7)</button></td>
+        <td style="@Model.get_styles(2, 8)"><button onclick="open_button_click()">@Model.board.get_nonet_value(2, 8)</button></td>
     </tr>
     <tr id="row4">
-        <td style="@get_styles(3, 0)"><button onclick="open_button_click()">@board.get_nonet_value(3, 0)</button></td>
-        <td style="@get_styles(3, 1)"><button onclick="open_button_click()">@board.get_nonet_value(3, 1)</button></td>
-        <td style="@get_styles(3, 2)"><button onclick="open_button_click()">@board.get_nonet_value(3, 2)</button></td>
-        <td style="@get_styles(3, 3)"><button onclick="open_button_click()">@board.get_nonet_value(3, 3)</button></td>
-        <td style="@get_styles(3, 4)"><button onclick="open_button_click()">@board.get_nonet_value(3, 4)</button></td>
-        <td style="@get_styles(3, 5)"><button onclick="open_button_click()">@board.get_nonet_value(3, 5)</button></td>
-        <td style="@get_styles(3, 6)"><button onclick="open_button_click()">@board.get_nonet_value(3, 6)</button></td>
-        <td style="@get_styles(3, 7)"><button onclick="open_button_click()">@board.get_nonet_value(3, 7)</button></td>
-        <td style="@get_styles(3, 8)"><button onclick="open_button_click()">@board.get_nonet_value(3, 8)</button></td>
+        <td style="@Model.get_styles(3, 0)"><button onclick="open_button_click()">@Model.board.get_nonet_value(3, 0)</button></td>
+        <td style="@Model.get_styles(3, 1)"><button onclick="open_button_click()">@Model.board.get_nonet_value(3, 1)</button></td>
+        <td style="@Model.get_styles(3, 2)"><button onclick="open_button_click()">@Model.board.get_nonet_value(3, 2)</button></td>
+        <td style="@Model.get_styles(3, 3)"><button onclick="open_button_click()">@Model.board.get_nonet_value(3, 3)</button></td>
+        <td style="@Model.get_styles(3, 4)"><button onclick="open_button_click()">@Model.board.get_nonet_value(3, 4)</button></td>
+        <td style="@Model.get_styles(3, 5)"><button onclick="open_button_click()">@Model.board.get_nonet_value(3, 5)</button></td>
+        <td style="@Model.get_styles(3, 6)"><button onclick="open_button_click()">@Model.board.get_nonet_value(3, 6)</button></td>
+        <td style="@Model.get_styles(3, 7)"><button onclick="open_button_click()">@Model.board.get_nonet_value(3, 7)</button></td>
+        <td style="@Model.get_styles(3, 8)"><button onclick="open_button_click()">@Model.board.get_nonet_value(3, 8)</button></td>
     </tr>
     <tr id="row5">
-        <td style="@get_styles(4, 0)"><button onclick="open_button_click()">@board.get_nonet_value(4, 0)</button></td>
-        <td style="@get_styles(4, 1)"><button onclick="open_button_click()">@board.get_nonet_value(4, 1)</button></td>
-        <td style="@get_styles(4, 2)"><button onclick="open_button_click()">@board.get_nonet_value(4, 2)</button></td>
-        <td style="@get_styles(4, 3)"><button onclick="open_button_click()">@board.get_nonet_value(4, 3)</button></td>
-        <td style="@get_styles(4, 4)"><button onclick="open_button_click()">@board.get_nonet_value(4, 4)</button></td>
-        <td style="@get_styles(4, 5)"><button onclick="open_button_click()">@board.get_nonet_value(4, 5)</button></td>
-        <td style="@get_styles(4, 6)"><button onclick="open_button_click()">@board.get_nonet_value(4, 6)</button></td>
-        <td style="@get_styles(4, 7)"><button onclick="open_button_click()">@board.get_nonet_value(4, 7)</button></td>
-        <td style="@get_styles(4, 8)"><button onclick="open_button_click()">@board.get_nonet_value(4, 8)</button></td>
+        <td style="@Model.get_styles(4, 0)"><button onclick="open_button_click()">@Model.board.get_nonet_value(4, 0)</button></td>
+        <td style="@Model.get_styles(4, 1)"><button onclick="open_button_click()">@Model.board.get_nonet_value(4, 1)</button></td>
+        <td style="@Model.get_styles(4, 2)"><button onclick="open_button_click()">@Model.board.get_nonet_value(4, 2)</button></td>
+        <td style="@Model.get_styles(4, 3)"><button onclick="open_button_click()">@Model.board.get_nonet_value(4, 3)</button></td>
+        <td style="@Model.get_styles(4, 4)"><button onclick="open_button_click()">@Model.board.get_nonet_value(4, 4)</button></td>
+        <td style="@Model.get_styles(4, 5)"><button onclick="open_button_click()">@Model.board.get_nonet_value(4, 5)</button></td>
+        <td style="@Model.get_styles(4, 6)"><button onclick="open_button_click()">@Model.board.get_nonet_value(4, 6)</button></td>
+        <td style="@Model.get_styles(4, 7)"><button onclick="open_button_click()">@Model.board.get_nonet_value(4, 7)</button></td>
+        <td style="@Model.get_styles(4, 8)"><button onclick="open_button_click()">@Model.board.get_nonet_value(4, 8)</button></td>
     </tr>
     <tr id="row6">
-        <td style="@get_styles(5, 0)"><button onclick="open_button_click()">@board.get_nonet_value(5, 0)</button></td>
-        <td style="@get_styles(5, 1)"><button onclick="open_button_click()">@board.get_nonet_value(5, 1)</button></td>
-        <td style="@get_styles(5, 2)"><button onclick="open_button_click()">@board.get_nonet_value(5, 2)</button></td>
-        <td style="@get_styles(5, 3)"><button onclick="open_button_click()">@board.get_nonet_value(5, 3)</button></td>
-        <td style="@get_styles(5, 4)"><button onclick="open_button_click()">@board.get_nonet_value(5, 4)</button></td>
-        <td style="@get_styles(5, 5)"><button onclick="open_button_click()">@board.get_nonet_value(5, 5)</button></td>
-        <td style="@get_styles(5, 6)"><button onclick="open_button_click()">@board.get_nonet_value(5, 6)</button></td>
-        <td style="@get_styles(5, 7)"><button onclick="open_button_click()">@board.get_nonet_value(5, 7)</button></td>
-        <td style="@get_styles(5, 8)"><button onclick="open_button_click()">@board.get_nonet_value(5, 8)</button></td>
+        <td style="@Model.get_styles(5, 0)"><button onclick="open_button_click()">@Model.board.get_nonet_value(5, 0)</button></td>
+        <td style="@Model.get_styles(5, 1)"><button onclick="open_button_click()">@Model.board.get_nonet_value(5, 1)</button></td>
+        <td style="@Model.get_styles(5, 2)"><button onclick="open_button_click()">@Model.board.get_nonet_value(5, 2)</button></td>
+        <td style="@Model.get_styles(5, 3)"><button onclick="open_button_click()">@Model.board.get_nonet_value(5, 3)</button></td>
+        <td style="@Model.get_styles(5, 4)"><button onclick="open_button_click()">@Model.board.get_nonet_value(5, 4)</button></td>
+        <td style="@Model.get_styles(5, 5)"><button onclick="open_button_click()">@Model.board.get_nonet_value(5, 5)</button></td>
+        <td style="@Model.get_styles(5, 6)"><button onclick="open_button_click()">@Model.board.get_nonet_value(5, 6)</button></td>
+        <td style="@Model.get_styles(5, 7)"><button onclick="open_button_click()">@Model.board.get_nonet_value(5, 7)</button></td>
+        <td style="@Model.get_styles(5, 8)"><button onclick="open_button_click()">@Model.board.get_nonet_value(5, 8)</button></td>
     </tr>
     <tr id="row7">
-        <td style="@get_styles(6, 0)"><button onclick="open_button_click()">@board.get_nonet_value(6, 0)</button></td>
-        <td style="@get_styles(6, 1)"><button onclick="open_button_click()">@board.get_nonet_value(6, 1)</button></td>
-        <td style="@get_styles(6, 2)"><button onclick="open_button_click()">@board.get_nonet_value(6, 2)</button></td>
-        <td style="@get_styles(6, 3)"><button onclick="open_button_click()">@board.get_nonet_value(6, 3)</button></td>
-        <td style="@get_styles(6, 4)"><button onclick="open_button_click()">@board.get_nonet_value(6, 4)</button></td>
-        <td style="@get_styles(6, 5)"><button onclick="open_button_click()">@board.get_nonet_value(6, 5)</button></td>
-        <td style="@get_styles(6, 6)"><button onclick="open_button_click()">@board.get_nonet_value(6, 6)</button></td>
-        <td style="@get_styles(6, 7)"><button onclick="open_button_click()">@board.get_nonet_value(6, 7)</button></td>
-        <td style="@get_styles(6, 8)"><button onclick="open_button_click()">@board.get_nonet_value(6, 8)</button></td>
+        <td style="@Model.get_styles(6, 0)"><button onclick="open_button_click()">@Model.board.get_nonet_value(6, 0)</button></td>
+        <td style="@Model.get_styles(6, 1)"><button onclick="open_button_click()">@Model.board.get_nonet_value(6, 1)</button></td>
+        <td style="@Model.get_styles(6, 2)"><button onclick="open_button_click()">@Model.board.get_nonet_value(6, 2)</button></td>
+        <td style="@Model.get_styles(6, 3)"><button onclick="open_button_click()">@Model.board.get_nonet_value(6, 3)</button></td>
+        <td style="@Model.get_styles(6, 4)"><button onclick="open_button_click()">@Model.board.get_nonet_value(6, 4)</button></td>
+        <td style="@Model.get_styles(6, 5)"><button onclick="open_button_click()">@Model.board.get_nonet_value(6, 5)</button></td>
+        <td style="@Model.get_styles(6, 6)"><button onclick="open_button_click()">@Model.board.get_nonet_value(6, 6)</button></td>
+        <td style="@Model.get_styles(6, 7)"><button onclick="open_button_click()">@Model.board.get_nonet_value(6, 7)</button></td>
+        <td style="@Model.get_styles(6, 8)"><button onclick="open_button_click()">@Model.board.get_nonet_value(6, 8)</button></td>
     </tr>
     <tr id="row8">
-        <td style="@get_styles(7, 0)"><button onclick="open_button_click()">@board.get_nonet_value(7, 0)</button></td>
-        <td style="@get_styles(7, 1)"><button onclick="open_button_click()">@board.get_nonet_value(7, 1)</button></td>
-        <td style="@get_styles(7, 2)"><button onclick="open_button_click()">@board.get_nonet_value(7, 2)</button></td>
-        <td style="@get_styles(7, 3)"><button onclick="open_button_click()">@board.get_nonet_value(7, 3)</button></td>
-        <td style="@get_styles(7, 4)"><button onclick="open_button_click()">@board.get_nonet_value(7, 4)</button></td>
-        <td style="@get_styles(7, 5)"><button onclick="open_button_click()">@board.get_nonet_value(7, 5)</button></td>
-        <td style="@get_styles(7, 6)"><button onclick="open_button_click()">@board.get_nonet_value(7, 6)</button></td>
-        <td style="@get_styles(7, 7)"><button onclick="open_button_click()">@board.get_nonet_value(7, 7)</button></td>
-        <td style="@get_styles(7, 8)"><button onclick="open_button_click()">@board.get_nonet_value(7, 8)</button></td>
+        <td style="@Model.get_styles(7, 0)"><button onclick="open_button_click()">@Model.board.get_nonet_value(7, 0)</button></td>
+        <td style="@Model.get_styles(7, 1)"><button onclick="open_button_click()">@Model.board.get_nonet_value(7, 1)</button></td>
+        <td style="@Model.get_styles(7, 2)"><button onclick="open_button_click()">@Model.board.get_nonet_value(7, 2)</button></td>
+        <td style="@Model.get_styles(7, 3)"><button onclick="open_button_click()">@Model.board.get_nonet_value(7, 3)</button></td>
+        <td style="@Model.get_styles(7, 4)"><button onclick="open_button_click()">@Model.board.get_nonet_value(7, 4)</button></td>
+        <td style="@Model.get_styles(7, 5)"><button onclick="open_button_click()">@Model.board.get_nonet_value(7, 5)</button></td>
+        <td style="@Model.get_styles(7, 6)"><button onclick="open_button_click()">@Model.board.get_nonet_value(7, 6)</button></td>
+        <td style="@Model.get_styles(7, 7)"><button onclick="open_button_click()">@Model.board.get_nonet_value(7, 7)</button></td>
+        <td style="@Model.get_styles(7, 8)"><button onclick="open_button_click()">@Model.board.get_nonet_value(7, 8)</button></td>
     </tr>
     <tr id="row9">
-        <td style="@get_styles(8, 0)"><button onclick="open_button_click()">@board.get_nonet_value(8, 0)</button></td>
-        <td style="@get_styles(8, 1)"><button onclick="open_button_click()">@board.get_nonet_value(8, 1)</button></td>
-        <td style="@get_styles(8, 2)"><button onclick="open_button_click()">@board.get_nonet_value(8, 2)</button></td>
-        <td style="@get_styles(8, 3)"><button onclick="open_button_click()">@board.get_nonet_value(8, 3)</button></td>
-        <td style="@get_styles(8, 4)"><button onclick="open_button_click()">@board.get_nonet_value(8, 4)</button></td>
-        <td style="@get_styles(8, 5)"><button onclick="open_button_click()">@board.get_nonet_value(8, 5)</button></td>
-        <td style="@get_styles(8, 6)"><button onclick="open_button_click()">@board.get_nonet_value(8, 6)</button></td>
-        <td style="@get_styles(8, 7)"><button onclick="open_button_click()">@board.get_nonet_value(8, 7)</button></td>
-        <td style="@get_styles(8, 8)"><button onclick="open_button_click()">@board.get_nonet_value(8, 8)</button></td>
+        <td style="@Model.get_styles(8, 0)"><button onclick="open_button_click()">@Model.board.get_nonet_value(8, 0)</button></td>
+        <td style="@Model.get_styles(8, 1)"><button onclick="open_button_click()">@Model.board.get_nonet_value(8, 1)</button></td>
+        <td style="@Model.get_styles(8, 2)"><button onclick="open_button_click()">@Model.board.get_nonet_value(8, 2)</button></td>
+        <td style="@Model.get_styles(8, 3)"><button onclick="open_button_click()">@Model.board.get_nonet_value(8, 3)</button></td>
+        <td style="@Model.get_styles(8, 4)"><button onclick="open_button_click()">@Model.board.get_nonet_value(8, 4)</button></td>
+        <td style="@Model.get_styles(8, 5)"><button onclick="open_button_click()">@Model.board.get_nonet_value(8, 5)</button></td>
+        <td style="@Model.get_styles(8, 6)"><button onclick="open_button_click()">@Model.board.get_nonet_value(8, 6)</button></td>
+        <td style="@Model.get_styles(8, 7)"><button onclick="open_button_click()">@Model.board.get_nonet_value(8, 7)</button></td>
+        <td style="@Model.get_styles(8, 8)"><button onclick="open_button_click()">@Model.board.get_nonet_value(8, 8)</button></td>
     </tr>
 
 </table>
