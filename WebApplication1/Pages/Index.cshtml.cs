@@ -18,10 +18,12 @@ namespace WebApplication1.Pages
             return "s";
         }
 
-        public void OnPost()
-        {
-            Console.WriteLine("TEST");
-        }
+        /* Variables */
+
+        public string popupStyle = "";
+
+        public static int inputSpaceX = -1;
+        public static int inputSpaceY = -1;
 
         /* Objects */
 
@@ -55,46 +57,9 @@ namespace WebApplication1.Pages
                 {0, 0, 0}  //    1c, 2c, 3c
             };
 
-            public void set_space_value(string space, int value)
+            public void set_space_value(int spacex, int spacey, int value)
             {
-                switch (space)
-                {
-                    case "1a":
-                        area[0, 0] = value;
-                        break;
-
-                    case "2a":
-                        area[0, 1] = value;
-                        break;
-
-                    case "3a":
-                        area[0, 2] = value;
-                        break;
-
-                    case "1b":
-                        area[1, 0] = value;
-                        break;
-
-                    case "2b":
-                        area[1, 1] = value;
-                        break;
-
-                    case "3b":
-                        area[1, 2] = value;
-                        break;
-
-                    case "1c":
-                        area[2, 0] = value;
-                        break;
-
-                    case "2c":
-                        area[2, 1] = value;
-                        break;
-
-                    case "3c":
-                        area[2, 2] = value;
-                        break;
-                }
+                area[spacex, spacey] = value;
             }
 
             public int get_space_value(int spaceX, int spaceY)
@@ -127,12 +92,17 @@ namespace WebApplication1.Pages
             //    1b, 2b, 3b
             //    1c, 2c, 3c
 
+            public Nonet get_nonet_space(int space1, int space2)
+            {
+                return main[space1, space2];
+            }
+
             public string get_nonet_value(int space1, int space2)
             {
                 // Returns the value of the space inputed. Finds the correct nonet for the space before 
                 // calling the nonet function to get the value.
 
-                Nonet currentNonet = null;
+                Nonet? currentNonet = null;
 
                 currentNonet = main[space1 / 3, space2 / 3];
                 string value = (currentNonet.get_space_value(space1 % 3, space2 % 3)).ToString();
@@ -143,131 +113,41 @@ namespace WebApplication1.Pages
 
         public Board board = new Board();
 
-    }
-}
+        /* Post Methods */
 
-/*
-public class Nonet
-{
-    private int[,] area = {
-        {0, 0, 0}, //    1a, 2a, 3a
-        {0, 0, 0}, //    1b, 2b, 3b
-        {0, 0, 0}  //    1c, 2c, 3c
-    };
-
-    public void set_space_value(string space, int value)
-    {
-        switch (space)
+        public void OnPostInput()
         {
-            case "1a":
-                area[0, 0] = value;
-                break;
+            popupStyle = "display: none; ";
+            Console.WriteLine("Popup Toggled Off");
 
-            case "2a":
-                area[0, 1] = value;
-                break;
-
-            case "3a":
-                area[0, 2] = value;
-                break;
-
-            case "1b":
-                area[1, 0] = value;
-                break;
-
-            case "2b":
-                area[1, 1] = value;
-                break;
-
-            case "3b":
-                area[1, 2] = value;
-                break;
-
-            case "1c":
-                area[2, 0] = value;
-                break;
-
-            case "2c":
-                area[2, 1] = value;
-                break;
-
-            case "3c":
-                area[2, 2] = value;
-                break;
-        }
-    }
-
-    public int get_space_value(string space)
-    {
-        int retVal = 0;
-
-        switch (space)
-        {
-            case "1a":
-                retVal = area[0, 0];
-                break;
-
-            case "2a":
-                retVal = area[0, 1];
-                break;
-
-            case "3a":
-                retVal = area[0, 2];
-                break;
-
-            case "1b":
-                retVal = area[1, 0];
-                break;
-
-            case "2b":
-                retVal = area[1, 1];
-                break;
-
-            case "3b":
-                retVal = area[1, 2];
-                break;
-
-            case "1c":
-                retVal = area[2, 0];
-                break;
-
-            case "2c":
-                retVal = area[2, 1];
-                break;
-
-            case "3c":
-                retVal = area[2, 2];
-                break;
-        }
-
-        return retVal;
-    }
-}
-
-public class Board
-{
-    private Nonet[,] main = { { null, null, null }, { null, null, null }, { null, null, null } };
-
-    public Board()
-    {
-        for (int y = 0; y < 3; y++)
-        {
-            for (int x = 0; x < 3; x++)
+            try
             {
-                main[0, 0] = new Nonet();
+                Console.WriteLine(Request.Form["inputNumber"]);
+                int value = int.Parse(Request.Form["inputNumber"]);
+                Console.WriteLine("Input Set");
+                board.get_nonet_space(inputSpaceX, inputSpaceY).set_space_value((inputSpaceX % 3), (inputSpaceY % 3), value);
+            }
+            catch (ArgumentNullException)
+            {
+                Console.Write("ERROR: Submitted empty form; Canceled instead.");
             }
         }
 
-        Console.WriteLine(main);
-    }
+        public void OnPostPopup(int spacex, int spacey)
+        {
+            popupStyle = "display: block; ";
+            Console.WriteLine("Popup Toggled On");
+            Console.WriteLine(spacex);
+            Console.WriteLine(spacey);
 
-    //    1a, 2a, 3a
-    //    1b, 2b, 3b
-    //    1c, 2c, 3c
+            inputSpaceX = spacex;
+            inputSpaceY = spacey;
+        }
 
-    public string get_nonet_value()
-    {
-        return "a";
+        public void OnPostPopupCancel()
+        {
+            popupStyle = "display: none; ";
+            Console.WriteLine("Popup Toggled Off");
+        }
     }
 }
-*/

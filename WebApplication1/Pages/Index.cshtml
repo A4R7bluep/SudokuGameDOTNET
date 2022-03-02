@@ -33,53 +33,6 @@
 
 }
 
-@{
-    /*
-    string Send()
-    {
-        return "";
-    }
-
-    string main = Send();
-    */
-}
-
-<!--
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
--->
-
-<!--
-    =========================================
-    This is the javascript that manages whether the popup is displayed or not
-    =========================================
--->
-
-<script>
-    var currentSpaceX = 0;
-    var currentSpaceY = 0;
-
-    function open_button_click(x, y) 
-    {
-        document.getElementById("popup").style.display = "block";
-        currentSpaceX = x;
-        currentSpaceY = y;
-    }
-
-    function close_button_click() 
-    {
-        document.getElementById("popup").style.display = "none";
-        currentSpaceX = 0;
-        currentSpaceY = 0;
-    }
-
-    function input_button_clicked(number) {
-
-    } 
-</script>
-
 <!--
     =========================================
     The popup is where you enter numbers
@@ -88,7 +41,7 @@
     =========================================
 -->
 
-<div id="popup">
+<div id="popup" style="@Model.popupStyle">
     <form method="post" action="">
         <table id="inputTable">
             <tr>
@@ -107,7 +60,8 @@
                 <td><input type="radio" value="9" class="inputButton" name="inputNumber">
             </tr>
         </table>
-        <input type="submit" id="cancelButton" value="cancel" />
+        <input type="submit" id="cancelButton" value="Cancel" asp-page-handler="PopupCancel" />
+        <input type="submit" id="cancelButton" value="Submit" asp-page-handler="Input" />
     </form>
 </div>
 
@@ -119,108 +73,110 @@
     =========================================
 -->
 
-<table id="board">
-    <tr id="row1">
-        <td style="@Model.get_styles(0, 0)"><button onclick="open_button_click(0, 0)">@Model.board.get_nonet_value(0, 0)</button></td>
-        <td style="@Model.get_styles(0, 1)"><button onclick="open_button_click()">@Model.board.get_nonet_value(0, 1)</button></td>
-        <td style="@Model.get_styles(0, 2)"><button onclick="open_button_click()">@Model.board.get_nonet_value(0, 2)</button></td>
-        <td style="@Model.get_styles(0, 3)"><button onclick="open_button_click()">@Model.board.get_nonet_value(0, 3)</button></td>
-        <td style="@Model.get_styles(0, 4)"><button onclick="open_button_click()">@Model.board.get_nonet_value(0, 4)</button></td>
-        <td style="@Model.get_styles(0, 5)"><button onclick="open_button_click()">@Model.board.get_nonet_value(0, 5)</button></td>
-        <td style="@Model.get_styles(0, 6)"><button onclick="open_button_click()">@Model.board.get_nonet_value(0, 6)</button></td>
-        <td style="@Model.get_styles(0, 7)"><button onclick="open_button_click()">@Model.board.get_nonet_value(0, 7)</button></td>
-        <td style="@Model.get_styles(0, 8)"><button onclick="open_button_click()">@Model.board.get_nonet_value(0, 8)</button></td>
-    </tr>
-    <tr id="row2">
-        <td style="@Model.get_styles(1, 0)"><button onclick="open_button_click()">@Model.board.get_nonet_value(1, 0)</button></td>
-        <td style="@Model.get_styles(1, 1)"><button onclick="open_button_click()">@Model.board.get_nonet_value(1, 1)</button></td>
-        <td style="@Model.get_styles(1, 2)"><button onclick="open_button_click()">@Model.board.get_nonet_value(1, 2)</button></td>
-        <td style="@Model.get_styles(1, 3)"><button onclick="open_button_click()">@Model.board.get_nonet_value(1, 3)</button></td>
-        <td style="@Model.get_styles(1, 4)"><button onclick="open_button_click()">@Model.board.get_nonet_value(1, 4)</button></td>
-        <td style="@Model.get_styles(1, 5)"><button onclick="open_button_click()">@Model.board.get_nonet_value(1, 5)</button></td>
-        <td style="@Model.get_styles(1, 6)"><button onclick="open_button_click()">@Model.board.get_nonet_value(1, 6)</button></td>
-        <td style="@Model.get_styles(1, 7)"><button onclick="open_button_click()">@Model.board.get_nonet_value(1, 7)</button></td>
-        <td style="@Model.get_styles(1, 8)"><button onclick="open_button_click()">@Model.board.get_nonet_value(1, 8)</button></td>
-    </tr>
-    <tr id="row3">
-        <td style="@Model.get_styles(2, 0)"><button onclick="open_button_click()">@Model.board.get_nonet_value(2, 0)</button></td>
-        <td style="@Model.get_styles(2, 1)"><button onclick="open_button_click()">@Model.board.get_nonet_value(2, 1)</button></td>
-        <td style="@Model.get_styles(2, 2)"><button onclick="open_button_click()">@Model.board.get_nonet_value(2, 2)</button></td>
-        <td style="@Model.get_styles(2, 3)"><button onclick="open_button_click()">@Model.board.get_nonet_value(2, 3)</button></td>
-        <td style="@Model.get_styles(2, 4)"><button onclick="open_button_click()">@Model.board.get_nonet_value(2, 4)</button></td>
-        <td style="@Model.get_styles(2, 5)"><button onclick="open_button_click()">@Model.board.get_nonet_value(2, 5)</button></td>
-        <td style="@Model.get_styles(2, 6)"><button onclick="open_button_click()">@Model.board.get_nonet_value(2, 6)</button></td>
-        <td style="@Model.get_styles(2, 7)"><button onclick="open_button_click()">@Model.board.get_nonet_value(2, 7)</button></td>
-        <td style="@Model.get_styles(2, 8)"><button onclick="open_button_click()">@Model.board.get_nonet_value(2, 8)</button></td>
-    </tr>
-    <tr id="row4">
-        <td style="@Model.get_styles(3, 0)"><button onclick="open_button_click()">@Model.board.get_nonet_value(3, 0)</button></td>
-        <td style="@Model.get_styles(3, 1)"><button onclick="open_button_click()">@Model.board.get_nonet_value(3, 1)</button></td>
-        <td style="@Model.get_styles(3, 2)"><button onclick="open_button_click()">@Model.board.get_nonet_value(3, 2)</button></td>
-        <td style="@Model.get_styles(3, 3)"><button onclick="open_button_click()">@Model.board.get_nonet_value(3, 3)</button></td>
-        <td style="@Model.get_styles(3, 4)"><button onclick="open_button_click()">@Model.board.get_nonet_value(3, 4)</button></td>
-        <td style="@Model.get_styles(3, 5)"><button onclick="open_button_click()">@Model.board.get_nonet_value(3, 5)</button></td>
-        <td style="@Model.get_styles(3, 6)"><button onclick="open_button_click()">@Model.board.get_nonet_value(3, 6)</button></td>
-        <td style="@Model.get_styles(3, 7)"><button onclick="open_button_click()">@Model.board.get_nonet_value(3, 7)</button></td>
-        <td style="@Model.get_styles(3, 8)"><button onclick="open_button_click()">@Model.board.get_nonet_value(3, 8)</button></td>
-    </tr>
-    <tr id="row5">
-        <td style="@Model.get_styles(4, 0)"><button onclick="open_button_click()">@Model.board.get_nonet_value(4, 0)</button></td>
-        <td style="@Model.get_styles(4, 1)"><button onclick="open_button_click()">@Model.board.get_nonet_value(4, 1)</button></td>
-        <td style="@Model.get_styles(4, 2)"><button onclick="open_button_click()">@Model.board.get_nonet_value(4, 2)</button></td>
-        <td style="@Model.get_styles(4, 3)"><button onclick="open_button_click()">@Model.board.get_nonet_value(4, 3)</button></td>
-        <td style="@Model.get_styles(4, 4)"><button onclick="open_button_click()">@Model.board.get_nonet_value(4, 4)</button></td>
-        <td style="@Model.get_styles(4, 5)"><button onclick="open_button_click()">@Model.board.get_nonet_value(4, 5)</button></td>
-        <td style="@Model.get_styles(4, 6)"><button onclick="open_button_click()">@Model.board.get_nonet_value(4, 6)</button></td>
-        <td style="@Model.get_styles(4, 7)"><button onclick="open_button_click()">@Model.board.get_nonet_value(4, 7)</button></td>
-        <td style="@Model.get_styles(4, 8)"><button onclick="open_button_click()">@Model.board.get_nonet_value(4, 8)</button></td>
-    </tr>
-    <tr id="row6">
-        <td style="@Model.get_styles(5, 0)"><button onclick="open_button_click()">@Model.board.get_nonet_value(5, 0)</button></td>
-        <td style="@Model.get_styles(5, 1)"><button onclick="open_button_click()">@Model.board.get_nonet_value(5, 1)</button></td>
-        <td style="@Model.get_styles(5, 2)"><button onclick="open_button_click()">@Model.board.get_nonet_value(5, 2)</button></td>
-        <td style="@Model.get_styles(5, 3)"><button onclick="open_button_click()">@Model.board.get_nonet_value(5, 3)</button></td>
-        <td style="@Model.get_styles(5, 4)"><button onclick="open_button_click()">@Model.board.get_nonet_value(5, 4)</button></td>
-        <td style="@Model.get_styles(5, 5)"><button onclick="open_button_click()">@Model.board.get_nonet_value(5, 5)</button></td>
-        <td style="@Model.get_styles(5, 6)"><button onclick="open_button_click()">@Model.board.get_nonet_value(5, 6)</button></td>
-        <td style="@Model.get_styles(5, 7)"><button onclick="open_button_click()">@Model.board.get_nonet_value(5, 7)</button></td>
-        <td style="@Model.get_styles(5, 8)"><button onclick="open_button_click()">@Model.board.get_nonet_value(5, 8)</button></td>
-    </tr>
-    <tr id="row7">
-        <td style="@Model.get_styles(6, 0)"><button onclick="open_button_click()">@Model.board.get_nonet_value(6, 0)</button></td>
-        <td style="@Model.get_styles(6, 1)"><button onclick="open_button_click()">@Model.board.get_nonet_value(6, 1)</button></td>
-        <td style="@Model.get_styles(6, 2)"><button onclick="open_button_click()">@Model.board.get_nonet_value(6, 2)</button></td>
-        <td style="@Model.get_styles(6, 3)"><button onclick="open_button_click()">@Model.board.get_nonet_value(6, 3)</button></td>
-        <td style="@Model.get_styles(6, 4)"><button onclick="open_button_click()">@Model.board.get_nonet_value(6, 4)</button></td>
-        <td style="@Model.get_styles(6, 5)"><button onclick="open_button_click()">@Model.board.get_nonet_value(6, 5)</button></td>
-        <td style="@Model.get_styles(6, 6)"><button onclick="open_button_click()">@Model.board.get_nonet_value(6, 6)</button></td>
-        <td style="@Model.get_styles(6, 7)"><button onclick="open_button_click()">@Model.board.get_nonet_value(6, 7)</button></td>
-        <td style="@Model.get_styles(6, 8)"><button onclick="open_button_click()">@Model.board.get_nonet_value(6, 8)</button></td>
-    </tr>
-    <tr id="row8">
-        <td style="@Model.get_styles(7, 0)"><button onclick="open_button_click()">@Model.board.get_nonet_value(7, 0)</button></td>
-        <td style="@Model.get_styles(7, 1)"><button onclick="open_button_click()">@Model.board.get_nonet_value(7, 1)</button></td>
-        <td style="@Model.get_styles(7, 2)"><button onclick="open_button_click()">@Model.board.get_nonet_value(7, 2)</button></td>
-        <td style="@Model.get_styles(7, 3)"><button onclick="open_button_click()">@Model.board.get_nonet_value(7, 3)</button></td>
-        <td style="@Model.get_styles(7, 4)"><button onclick="open_button_click()">@Model.board.get_nonet_value(7, 4)</button></td>
-        <td style="@Model.get_styles(7, 5)"><button onclick="open_button_click()">@Model.board.get_nonet_value(7, 5)</button></td>
-        <td style="@Model.get_styles(7, 6)"><button onclick="open_button_click()">@Model.board.get_nonet_value(7, 6)</button></td>
-        <td style="@Model.get_styles(7, 7)"><button onclick="open_button_click()">@Model.board.get_nonet_value(7, 7)</button></td>
-        <td style="@Model.get_styles(7, 8)"><button onclick="open_button_click()">@Model.board.get_nonet_value(7, 8)</button></td>
-    </tr>
-    <tr id="row9">
-        <td style="@Model.get_styles(8, 0)"><button onclick="open_button_click()">@Model.board.get_nonet_value(8, 0)</button></td>
-        <td style="@Model.get_styles(8, 1)"><button onclick="open_button_click()">@Model.board.get_nonet_value(8, 1)</button></td>
-        <td style="@Model.get_styles(8, 2)"><button onclick="open_button_click()">@Model.board.get_nonet_value(8, 2)</button></td>
-        <td style="@Model.get_styles(8, 3)"><button onclick="open_button_click()">@Model.board.get_nonet_value(8, 3)</button></td>
-        <td style="@Model.get_styles(8, 4)"><button onclick="open_button_click()">@Model.board.get_nonet_value(8, 4)</button></td>
-        <td style="@Model.get_styles(8, 5)"><button onclick="open_button_click()">@Model.board.get_nonet_value(8, 5)</button></td>
-        <td style="@Model.get_styles(8, 6)"><button onclick="open_button_click()">@Model.board.get_nonet_value(8, 6)</button></td>
-        <td style="@Model.get_styles(8, 7)"><button onclick="open_button_click()">@Model.board.get_nonet_value(8, 7)</button></td>
-        <td style="@Model.get_styles(8, 8)"><button onclick="open_button_click()">@Model.board.get_nonet_value(8, 8)</button></td>
-    </tr>
+<form method="post">
+    <table id="board">
+        <tr id="row1">
+            <td style="@Model.get_styles(0, 0)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="0" asp-route-spacey="0" value="@Model.board.get_nonet_value(0, 0)" /></td>
+            <td style="@Model.get_styles(0, 1)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="0" asp-route-spacey="1" value="@Model.board.get_nonet_value(0, 1)" /></td>
+            <td style="@Model.get_styles(0, 2)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="0" asp-route-spacey="2" value="@Model.board.get_nonet_value(0, 2)" /></td>
+            <td style="@Model.get_styles(0, 3)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="0" asp-route-spacey="3" value="@Model.board.get_nonet_value(0, 3)" /></td>
+            <td style="@Model.get_styles(0, 4)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="0" asp-route-spacey="4" value="@Model.board.get_nonet_value(0, 4)" /></td>
+            <td style="@Model.get_styles(0, 5)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="0" asp-route-spacey="5" value="@Model.board.get_nonet_value(0, 5)" /></td>
+            <td style="@Model.get_styles(0, 6)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="0" asp-route-spacey="6" value="@Model.board.get_nonet_value(0, 6)" /></td>
+            <td style="@Model.get_styles(0, 7)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="0" asp-route-spacey="7" value="@Model.board.get_nonet_value(0, 7)" /></td>
+            <td style="@Model.get_styles(0, 8)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="0" asp-route-spacey="8" value="@Model.board.get_nonet_value(0, 8)" /></td>
+        </tr>
+        <tr id="row2">
+            <td style="@Model.get_styles(1, 0)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="1" asp-route-spacey="0" value="@Model.board.get_nonet_value(1, 0)" /></td>
+            <td style="@Model.get_styles(1, 1)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="1" asp-route-spacey="1" value="@Model.board.get_nonet_value(1, 1)" /></td>
+            <td style="@Model.get_styles(1, 2)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="1" asp-route-spacey="2" value="@Model.board.get_nonet_value(1, 2)" /></td>
+            <td style="@Model.get_styles(1, 3)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="1" asp-route-spacey="3" value="@Model.board.get_nonet_value(1, 3)" /></td>
+            <td style="@Model.get_styles(1, 4)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="1" asp-route-spacey="4" value="@Model.board.get_nonet_value(1, 4)" /></td>
+            <td style="@Model.get_styles(1, 5)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="1" asp-route-spacey="5" value="@Model.board.get_nonet_value(1, 5)" /></td>
+            <td style="@Model.get_styles(1, 6)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="1" asp-route-spacey="6" value="@Model.board.get_nonet_value(1, 6)" /></td>
+            <td style="@Model.get_styles(1, 7)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="1" asp-route-spacey="7" value="@Model.board.get_nonet_value(1, 7)" /></td>
+            <td style="@Model.get_styles(1, 8)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="1" asp-route-spacey="8" value="@Model.board.get_nonet_value(1, 8)" /></td>
+        </tr>
+        <tr id="row3">
+            <td style="@Model.get_styles(2, 0)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="2" asp-route-spacey="0" value="@Model.board.get_nonet_value(2, 0)" /></td>
+            <td style="@Model.get_styles(2, 1)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="2" asp-route-spacey="1" value="@Model.board.get_nonet_value(2, 1)" /></td>
+            <td style="@Model.get_styles(2, 2)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="2" asp-route-spacey="2" value="@Model.board.get_nonet_value(2, 2)" /></td>
+            <td style="@Model.get_styles(2, 3)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="2" asp-route-spacey="3" value="@Model.board.get_nonet_value(2, 3)" /></td>
+            <td style="@Model.get_styles(2, 4)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="2" asp-route-spacey="4" value="@Model.board.get_nonet_value(2, 4)" /></td>
+            <td style="@Model.get_styles(2, 5)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="2" asp-route-spacey="5" value="@Model.board.get_nonet_value(2, 5)" /></td>
+            <td style="@Model.get_styles(2, 6)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="2" asp-route-spacey="6" value="@Model.board.get_nonet_value(2, 6)" /></td>
+            <td style="@Model.get_styles(2, 7)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="2" asp-route-spacey="7" value="@Model.board.get_nonet_value(2, 7)" /></td>
+            <td style="@Model.get_styles(2, 8)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="2" asp-route-spacey="8" value="@Model.board.get_nonet_value(2, 8)" /></td>
+        </tr>
+        <tr id="row4">
+            <td style="@Model.get_styles(3, 0)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="3" asp-route-spacey="0" value="@Model.board.get_nonet_value(3, 0)" /></td>
+            <td style="@Model.get_styles(3, 1)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="3" asp-route-spacey="1" value="@Model.board.get_nonet_value(3, 1)" /></td>
+            <td style="@Model.get_styles(3, 2)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="3" asp-route-spacey="2" value="@Model.board.get_nonet_value(3, 2)" /></td>
+            <td style="@Model.get_styles(3, 3)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="3" asp-route-spacey="3" value="@Model.board.get_nonet_value(3, 3)" /></td>
+            <td style="@Model.get_styles(3, 4)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="3" asp-route-spacey="4" value="@Model.board.get_nonet_value(3, 4)" /></td>
+            <td style="@Model.get_styles(3, 5)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="3" asp-route-spacey="5" value="@Model.board.get_nonet_value(3, 5)" /></td>
+            <td style="@Model.get_styles(3, 6)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="3" asp-route-spacey="6" value="@Model.board.get_nonet_value(3, 6)" /></td>
+            <td style="@Model.get_styles(3, 7)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="3" asp-route-spacey="7" value="@Model.board.get_nonet_value(3, 7)" /></td>
+            <td style="@Model.get_styles(3, 8)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="3" asp-route-spacey="8" value="@Model.board.get_nonet_value(3, 8)" /></td>
+        </tr>
+        <tr id="row5">
+            <td style="@Model.get_styles(4, 0)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="4" asp-route-spacey="0" value="@Model.board.get_nonet_value(4, 0)" /></td>
+            <td style="@Model.get_styles(4, 1)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="4" asp-route-spacey="1" value="@Model.board.get_nonet_value(4, 1)" /></td>
+            <td style="@Model.get_styles(4, 2)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="4" asp-route-spacey="2" value="@Model.board.get_nonet_value(4, 2)" /></td>
+            <td style="@Model.get_styles(4, 3)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="4" asp-route-spacey="3" value="@Model.board.get_nonet_value(4, 3)" /></td>
+            <td style="@Model.get_styles(4, 4)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="4" asp-route-spacey="4" value="@Model.board.get_nonet_value(4, 4)" /></td>
+            <td style="@Model.get_styles(4, 5)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="4" asp-route-spacey="5" value="@Model.board.get_nonet_value(4, 5)" /></td>
+            <td style="@Model.get_styles(4, 6)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="4" asp-route-spacey="6" value="@Model.board.get_nonet_value(4, 6)" /></td>
+            <td style="@Model.get_styles(4, 7)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="4" asp-route-spacey="7" value="@Model.board.get_nonet_value(4, 7)" /></td>
+            <td style="@Model.get_styles(4, 8)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="4" asp-route-spacey="8" value="@Model.board.get_nonet_value(4, 8)" /></td>
+        </tr>
+        <tr id="row6">
+            <td style="@Model.get_styles(5, 0)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="5" asp-route-spacey="0" value="@Model.board.get_nonet_value(5, 0)" /></td>
+            <td style="@Model.get_styles(5, 1)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="5" asp-route-spacey="1" value="@Model.board.get_nonet_value(5, 1)" /></td>
+            <td style="@Model.get_styles(5, 2)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="5" asp-route-spacey="2" value="@Model.board.get_nonet_value(5, 2)" /></td>
+            <td style="@Model.get_styles(5, 3)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="5" asp-route-spacey="3" value="@Model.board.get_nonet_value(5, 3)" /></td>
+            <td style="@Model.get_styles(5, 4)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="5" asp-route-spacey="4" value="@Model.board.get_nonet_value(5, 4)" /></td>
+            <td style="@Model.get_styles(5, 5)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="5" asp-route-spacey="5" value="@Model.board.get_nonet_value(5, 5)" /></td>
+            <td style="@Model.get_styles(5, 6)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="5" asp-route-spacey="6" value="@Model.board.get_nonet_value(5, 6)" /></td>
+            <td style="@Model.get_styles(5, 7)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="5" asp-route-spacey="7" value="@Model.board.get_nonet_value(5, 7)" /></td>
+            <td style="@Model.get_styles(5, 8)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="5" asp-route-spacey="8" value="@Model.board.get_nonet_value(5, 8)" /></td>
+        </tr>
+        <tr id="row7">
+            <td style="@Model.get_styles(6, 0)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="6" asp-route-spacey="0" value="@Model.board.get_nonet_value(6, 0)" /></td>
+            <td style="@Model.get_styles(6, 1)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="6" asp-route-spacey="1" value="@Model.board.get_nonet_value(6, 1)" /></td>
+            <td style="@Model.get_styles(6, 2)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="6" asp-route-spacey="2" value="@Model.board.get_nonet_value(6, 2)" /></td>
+            <td style="@Model.get_styles(6, 3)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="6" asp-route-spacey="3" value="@Model.board.get_nonet_value(6, 3)" /></td>
+            <td style="@Model.get_styles(6, 4)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="6" asp-route-spacey="4" value="@Model.board.get_nonet_value(6, 4)" /></td>
+            <td style="@Model.get_styles(6, 5)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="6" asp-route-spacey="5" value="@Model.board.get_nonet_value(6, 5)" /></td>
+            <td style="@Model.get_styles(6, 6)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="6" asp-route-spacey="6" value="@Model.board.get_nonet_value(6, 6)" /></td>
+            <td style="@Model.get_styles(6, 7)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="6" asp-route-spacey="7" value="@Model.board.get_nonet_value(6, 7)" /></td>
+            <td style="@Model.get_styles(6, 8)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="6" asp-route-spacey="8" value="@Model.board.get_nonet_value(6, 8)" /></td>
+        </tr>
+        <tr id="row8">
+            <td style="@Model.get_styles(7, 0)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="7" asp-route-spacey="0" value="@Model.board.get_nonet_value(7, 0)" /></td>
+            <td style="@Model.get_styles(7, 1)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="7" asp-route-spacey="1" value="@Model.board.get_nonet_value(7, 1)" /></td>
+            <td style="@Model.get_styles(7, 2)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="7" asp-route-spacey="2" value="@Model.board.get_nonet_value(7, 2)" /></td>
+            <td style="@Model.get_styles(7, 3)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="7" asp-route-spacey="3" value="@Model.board.get_nonet_value(7, 3)" /></td>
+            <td style="@Model.get_styles(7, 4)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="7" asp-route-spacey="4" value="@Model.board.get_nonet_value(7, 4)" /></td>
+            <td style="@Model.get_styles(7, 5)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="7" asp-route-spacey="5" value="@Model.board.get_nonet_value(7, 5)" /></td>
+            <td style="@Model.get_styles(7, 6)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="7" asp-route-spacey="6" value="@Model.board.get_nonet_value(7, 6)" /></td>
+            <td style="@Model.get_styles(7, 7)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="7" asp-route-spacey="7" value="@Model.board.get_nonet_value(7, 7)" /></td>
+            <td style="@Model.get_styles(7, 8)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="7" asp-route-spacey="8" value="@Model.board.get_nonet_value(7, 8)" /></td>
+        </tr>
+        <tr id="row9">
+            <td style="@Model.get_styles(8, 0)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="8" asp-route-spacey="0" value="@Model.board.get_nonet_value(8, 0)" /></td>
+            <td style="@Model.get_styles(8, 1)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="8" asp-route-spacey="1" value="@Model.board.get_nonet_value(8, 1)" /></td>
+            <td style="@Model.get_styles(8, 2)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="8" asp-route-spacey="2" value="@Model.board.get_nonet_value(8, 2)" /></td>
+            <td style="@Model.get_styles(8, 3)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="8" asp-route-spacey="3" value="@Model.board.get_nonet_value(8, 3)" /></td>
+            <td style="@Model.get_styles(8, 4)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="8" asp-route-spacey="4" value="@Model.board.get_nonet_value(8, 4)" /></td>
+            <td style="@Model.get_styles(8, 5)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="8" asp-route-spacey="5" value="@Model.board.get_nonet_value(8, 5)" /></td>
+            <td style="@Model.get_styles(8, 6)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="8" asp-route-spacey="6" value="@Model.board.get_nonet_value(8, 6)" /></td>
+            <td style="@Model.get_styles(8, 7)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="8" asp-route-spacey="7" value="@Model.board.get_nonet_value(8, 7)" /></td>
+            <td style="@Model.get_styles(8, 8)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="8" asp-route-spacey="8" value="@Model.board.get_nonet_value(8, 8)" /></td>
+        </tr>
 
-</table>
+    </table>
+</form>
 
 <style>
     table {
@@ -268,7 +224,7 @@
         margin-top: 100px;
     }
 
-    .inputButton {
+    #board input {
         border: none;
         background-color: inherit;
     }
