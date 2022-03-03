@@ -22,4 +22,4 @@ app.UseAuthorization();
 
 app.MapRazorPages();
 
-app.Run();
+app.Run("https://192.168.107.13:7264");

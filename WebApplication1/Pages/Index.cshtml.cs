@@ -25,7 +25,19 @@ namespace WebApplication1.Pages
         public static int inputSpaceX = -1;
         public static int inputSpaceY = -1;
 
-        /* Objects */
+
+
+        /*
+         * This is the C# that manages the data entered from the website
+         * 
+         * It contains the functions:
+         *     test,
+         *     get_styles
+         * 
+         * It also contains the classes:
+         *     Board, 
+         *     Nonet
+         */
 
         public string get_styles(int spaceX, int spaceY)
         {
@@ -51,7 +63,7 @@ namespace WebApplication1.Pages
         {
             // The Nonet class is embeded into the board. This separates the values by the 3x3 squares
 
-            private int[,] area = {
+            private static int[,] area = {
                 {0, 0, 0}, //    1a, 2a, 3a
                 {0, 0, 0}, //    1b, 2b, 3b
                 {0, 0, 0}  //    1c, 2c, 3c
@@ -66,6 +78,23 @@ namespace WebApplication1.Pages
             {
                 return area[spaceX, spaceY];
             }
+
+            public string returnEntireBoard()
+            {
+                string output = "";
+
+                for (int y = 0; y < 3; y++)
+                {
+                    for (int x = 0; x < 3; x++)
+                    {
+                        output += (area[x, y]);
+
+                    }
+                    output += "\n";
+                }
+
+                return output;
+            }
         }
 
         public class Board
@@ -73,7 +102,7 @@ namespace WebApplication1.Pages
             // The board class holds all of the board spaces in the "main" array. It holds a 3x3 of Nonets. 
             // It calls the functions on those nonets
 
-            private Nonet[,] main = { { null, null, null }, { null, null, null }, { null, null, null } };
+            private static Nonet[,] main = { { null, null, null }, { null, null, null }, { null, null, null } };
 
             public Board()
             {
@@ -126,6 +155,7 @@ namespace WebApplication1.Pages
                 int value = int.Parse(Request.Form["inputNumber"]);
                 Console.WriteLine("Input Set");
                 board.get_nonet_space(inputSpaceX, inputSpaceY).set_space_value((inputSpaceX % 3), (inputSpaceY % 3), value);
+                Console.WriteLine(board.get_nonet_space(inputSpaceX, inputSpaceY).returnEntireBoard());
             }
             catch (ArgumentNullException)
             {
