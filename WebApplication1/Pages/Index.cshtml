@@ -9,13 +9,6 @@
 @functions {
     string currentSpace = "";
 
-    public void test(string testCode)
-    {
-        // Used for testing whether something works
-
-        Console.WriteLine(testCode);
-    }
-
     public string popupDisplay = "";
 
 }
@@ -166,21 +159,8 @@
 </form>
 
 <style>
-    table {
+    table, td {
         border: 1px solid black;
-    }
-
-    td {
-        border: 1px solid black;
-        padding-top: 20px;
-        padding-bottom: 20px;
-        padding-right: 25px;
-        padding-left: 25px;
-    }
-
-    button {
-        border: none;
-        background-color: inherit;
     }
 
     #popup {
@@ -214,5 +194,17 @@
     #board input {
         border: none;
         background-color: inherit;
+        padding-top: 25px;
+        padding-bottom: 25px;
+        padding-right: 30px;
+        padding-left: 30px;
     }
+
+    #inputTable td {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        padding-right: 25px;
+        padding-left: 25px;
+    }
+
 </style>

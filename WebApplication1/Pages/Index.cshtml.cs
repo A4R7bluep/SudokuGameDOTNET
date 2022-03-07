@@ -31,7 +31,6 @@ namespace WebApplication1.Pages
          * This is the C# that manages the data entered from the website
          * 
          * It contains the functions:
-         *     test,
          *     get_styles
          * 
          * It also contains the classes:
@@ -68,11 +67,6 @@ namespace WebApplication1.Pages
                 {0, 0, 0}, //    1b, 2b, 3b
                 {0, 0, 0}  //    1c, 2c, 3c
             };
-
-            public Nonet()
-            {
-                Console.WriteLine("CONSTRUCTING NONET");
-            }
 
             public void set_space_value(int spacex, int spacey, int value)
             {
@@ -111,7 +105,6 @@ namespace WebApplication1.Pages
             public Board()
             {
                 // The constructor for the Board class. It instantiates and adds the nonets into the array, main.
-                Console.WriteLine("CONSTRUCTING BOARD");
                 for (int x = 0; x < 3; x++)
                 {
                     for (int y = 0; y < 3; y++)
@@ -123,9 +116,13 @@ namespace WebApplication1.Pages
                 }
             }
 
-            //    1a, 2a, 3a
-            //    1b, 2b, 3b
-            //    1c, 2c, 3c
+            /*
+             * Get functions
+             * 
+             * Contains:
+             *     get_nonet_space,
+             *     get_nonet_value
+             */
 
             public Nonet get_nonet_space(int space1, int space2)
             {
@@ -144,6 +141,72 @@ namespace WebApplication1.Pages
 
                 return value;
             }
+
+            //Validity functions
+            public bool get_validity_nonet(Nonet nonet, int value)
+            {
+                bool valid = true;
+                
+                for (int x = 0; x < 3; x++)
+                {
+                    for (int y = 0; y < 3; y++)
+                    {
+                        if (nonet.get_space_value(x, y) == value) {
+                            valid = false;
+                        }
+                    }
+                }
+
+                Console.WriteLine("Nonet move validity test result: " + valid);
+                return valid;
+            }
+
+            public bool get_validity_row(int row, int value)
+            {
+                bool valid = true;
+
+                for (int column = 0; column < 4; column++)
+                {
+                    Console.WriteLine(column);
+                    Console.WriteLine(row);
+
+                    Nonet currentNonet = main[Math.Min(column * 3, 2), row];
+
+                    for (int x = 0; x < 3; x++)
+                    {
+                        if (currentNonet.get_space_value(row / 3, x) == value)
+                        {
+                            valid = false;
+                        }
+                        
+                    }
+                }
+
+                Console.WriteLine("Row move validity test result: " + valid);
+                return valid;
+            }
+
+            public bool get_validity_column(int column, int value)
+            {
+                bool valid = true;
+
+                for (int row = 0; column < 4; column++)
+                {
+                    Nonet currentNonet = main[row, Math.Min(column * 3, 2)];
+
+                    for (int x = 0; x < 3; x++)
+                    {
+                        if (currentNonet.get_space_value(x, column / 3) == value)
+                        {
+                            valid = false;
+                        }
+                        
+                    }
+                }
+
+                Console.WriteLine("Row move validity test result: " + valid);
+                return valid;
+            }
         }
 
         public Board board = new Board();
@@ -157,13 +220,21 @@ namespace WebApplication1.Pages
 
             try
             {
-                Console.WriteLine(Request.Form["inputNumber"]);
                 int value = int.Parse(Request.Form["inputNumber"]);
-                Console.WriteLine("Input Set");
-                Console.WriteLine("Setting inputSpaceX: " + inputSpaceX);
-                Console.WriteLine("Setting inputSpaceY: " + inputSpaceY);
-                board.get_nonet_space(inputSpaceX / 3, inputSpaceY / 3).set_space_value((inputSpaceX % 3), (inputSpaceY % 3), value);
-                Console.WriteLine(board.get_nonet_space(inputSpaceX / 3, inputSpaceY / 3).returnEntireBoard());
+                bool validity_nonet = board.get_validity_nonet(board.get_nonet_space(inputSpaceX / 3, inputSpaceY / 3), value);
+                bool validity_row = board.get_validity_row(inputSpaceX, value);
+                bool validity_column = board.get_validity_column(inputSpaceY, value);
+                
+                if (validity_nonet && validity_row && validity_column)
+                {
+                    board.get_nonet_space(inputSpaceX / 3, inputSpaceY / 3).set_space_value((inputSpaceX % 3), (inputSpaceY % 3), value);
+                    Console.WriteLine(board.get_nonet_space(inputSpaceX / 3, inputSpaceY / 3).returnEntireBoard());
+                }
+                else
+                {
+                    Console.WriteLine("Input invalid");
+                }
+                
             }
             catch (ArgumentNullException)
             {
@@ -175,10 +246,6 @@ namespace WebApplication1.Pages
         {
             popupStyle = "display: block; ";
             Console.WriteLine("Popup Toggled On");
-            Console.WriteLine(spacex);
-            Console.WriteLine(spacey);
-            Console.WriteLine(inputSpaceX);
-            Console.WriteLine(inputSpaceY);
             Console.WriteLine(board.get_nonet_space(inputSpaceX / 3, inputSpaceY / 3).returnEntireBoard());
 
             inputSpaceX = spacex;
