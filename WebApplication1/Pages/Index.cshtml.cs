@@ -63,11 +63,16 @@ namespace WebApplication1.Pages
         {
             // The Nonet class is embeded into the board. This separates the values by the 3x3 squares
 
-            private static int[,] area = {
+            private int[,] area = {
                 {0, 0, 0}, //    1a, 2a, 3a
                 {0, 0, 0}, //    1b, 2b, 3b
                 {0, 0, 0}  //    1c, 2c, 3c
             };
+
+            public Nonet()
+            {
+                Console.WriteLine("CONSTRUCTING NONET");
+            }
 
             public void set_space_value(int spacex, int spacey, int value)
             {
@@ -83,12 +88,11 @@ namespace WebApplication1.Pages
             {
                 string output = "";
 
-                for (int y = 0; y < 3; y++)
+                for (int x = 0; x < 3; x++)
                 {
-                    for (int x = 0; x < 3; x++)
+                    for (int y = 0; y < 3; y++)
                     {
                         output += (area[x, y]);
-
                     }
                     output += "\n";
                 }
@@ -107,12 +111,14 @@ namespace WebApplication1.Pages
             public Board()
             {
                 // The constructor for the Board class. It instantiates and adds the nonets into the array, main.
-
-                for (int y = 0; y < 3; y++)
+                Console.WriteLine("CONSTRUCTING BOARD");
+                for (int x = 0; x < 3; x++)
                 {
-                    for (int x = 0; x < 3; x++)
+                    for (int y = 0; y < 3; y++)
                     {
-                        main[x, y] = new Nonet();
+                        if (main[x, y] == null) {
+                            main[x, y] = new Nonet();
+                        }
                     }
                 }
             }
@@ -154,8 +160,10 @@ namespace WebApplication1.Pages
                 Console.WriteLine(Request.Form["inputNumber"]);
                 int value = int.Parse(Request.Form["inputNumber"]);
                 Console.WriteLine("Input Set");
-                board.get_nonet_space(inputSpaceX, inputSpaceY).set_space_value((inputSpaceX % 3), (inputSpaceY % 3), value);
-                Console.WriteLine(board.get_nonet_space(inputSpaceX, inputSpaceY).returnEntireBoard());
+                Console.WriteLine("Setting inputSpaceX: " + inputSpaceX);
+                Console.WriteLine("Setting inputSpaceY: " + inputSpaceY);
+                board.get_nonet_space(inputSpaceX / 3, inputSpaceY / 3).set_space_value((inputSpaceX % 3), (inputSpaceY % 3), value);
+                Console.WriteLine(board.get_nonet_space(inputSpaceX / 3, inputSpaceY / 3).returnEntireBoard());
             }
             catch (ArgumentNullException)
             {
@@ -169,6 +177,9 @@ namespace WebApplication1.Pages
             Console.WriteLine("Popup Toggled On");
             Console.WriteLine(spacex);
             Console.WriteLine(spacey);
+            Console.WriteLine(inputSpaceX);
+            Console.WriteLine(inputSpaceY);
+            Console.WriteLine(board.get_nonet_space(inputSpaceX / 3, inputSpaceY / 3).returnEntireBoard());
 
             inputSpaceX = spacex;
             inputSpaceY = spacey;
