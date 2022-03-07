@@ -165,12 +165,9 @@ namespace WebApplication1.Pages
             {
                 bool valid = true;
 
-                for (int column = 0; column < 4; column++)
+                for (int column = 0; column < 3; column++)
                 {
-                    Console.WriteLine(column);
-                    Console.WriteLine(row);
-
-                    Nonet currentNonet = main[Math.Min(column * 3, 2), row];
+                    Nonet currentNonet = main[Math.Min(column * 3, 2), row / 3];
 
                     for (int x = 0; x < 3; x++)
                     {
@@ -190,9 +187,9 @@ namespace WebApplication1.Pages
             {
                 bool valid = true;
 
-                for (int row = 0; column < 4; column++)
+                for (int row = 0; column < 3; column++)
                 {
-                    Nonet currentNonet = main[row, Math.Min(column * 3, 2)];
+                    Nonet currentNonet = main[row / 3, Math.Min(column * 3, 2)];
 
                     for (int x = 0; x < 3; x++)
                     {
@@ -216,7 +213,6 @@ namespace WebApplication1.Pages
         public void OnPostInput()
         {
             popupStyle = "display: none; ";
-            Console.WriteLine("Popup Toggled Off");
 
             try
             {
@@ -224,13 +220,19 @@ namespace WebApplication1.Pages
                 bool validity_nonet = board.get_validity_nonet(board.get_nonet_space(inputSpaceX / 3, inputSpaceY / 3), value);
                 bool validity_row = board.get_validity_row(inputSpaceX, value);
                 bool validity_column = board.get_validity_column(inputSpaceY, value);
+                bool debug_override = true;
                 
-                if (validity_nonet && validity_row && validity_column)
+                if (debug_override)
                 {
                     board.get_nonet_space(inputSpaceX / 3, inputSpaceY / 3).set_space_value((inputSpaceX % 3), (inputSpaceY % 3), value);
-                    Console.WriteLine(board.get_nonet_space(inputSpaceX / 3, inputSpaceY / 3).returnEntireBoard());
+                    Console.WriteLine("Skipping validation because of debugging");
                 }
-                else
+
+                if (validity_nonet && validity_row && validity_column && ! debug_override)
+                {
+                    board.get_nonet_space(inputSpaceX / 3, inputSpaceY / 3).set_space_value((inputSpaceX % 3), (inputSpaceY % 3), value);
+                }
+                else if (validity_nonet && validity_row && validity_column)
                 {
                     Console.WriteLine("Input invalid");
                 }
@@ -245,8 +247,6 @@ namespace WebApplication1.Pages
         public void OnPostPopup(int spacex, int spacey)
         {
             popupStyle = "display: block; ";
-            Console.WriteLine("Popup Toggled On");
-            Console.WriteLine(board.get_nonet_space(inputSpaceX / 3, inputSpaceY / 3).returnEntireBoard());
 
             inputSpaceX = spacex;
             inputSpaceY = spacey;
@@ -255,7 +255,6 @@ namespace WebApplication1.Pages
         public void OnPostPopupCancel()
         {
             popupStyle = "display: none; ";
-            Console.WriteLine("Popup Toggled Off");
         }
     }
 }
