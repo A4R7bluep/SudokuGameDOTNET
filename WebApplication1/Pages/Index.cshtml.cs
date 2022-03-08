@@ -25,7 +25,7 @@ namespace WebApplication1.Pages
         public static int inputSpaceX = -1;
         public static int inputSpaceY = -1;
 
-
+        bool boardSet = false;
 
         /*
          * This is the C# that manages the data entered from the website
@@ -208,6 +208,38 @@ namespace WebApplication1.Pages
 
         public Board board = new Board();
 
+        public void fill_board()
+        {
+            if (!boardSet)
+            {
+                for (int row = 0; row < 9; row++)
+            {
+                for (int col = 0; col < 9; col++)
+                {
+                    Nonet currentNonet = board.get_nonet_space(row / 3, col / 3);
+                    Random random = new Random();
+
+                    switch (Convert.ToBoolean(random.Next(2)))
+                    {
+                        case false:
+                            Console.WriteLine("Box blank");
+                            break;
+
+                        case true:
+                            currentNonet.set_space_value(row % 3, col % 3, random.Next(10));
+                            break;
+                    }
+                }
+            }
+            boardSet = true;
+            }
+        }
+
+        public void OnGet()
+        {
+            fill_board();
+        }
+
         /* Post Methods */
 
         public void OnPostInput()
@@ -228,11 +260,11 @@ namespace WebApplication1.Pages
                     Console.WriteLine("Skipping validation because of debugging");
                 }
 
-                if (validity_nonet && validity_row && validity_column && ! debug_override)
+                else if (validity_nonet && validity_row && validity_column && ! debug_override)
                 {
                     board.get_nonet_space(inputSpaceX / 3, inputSpaceY / 3).set_space_value((inputSpaceX % 3), (inputSpaceY % 3), value);
                 }
-                else if (validity_nonet && validity_row && validity_column)
+                else
                 {
                     Console.WriteLine("Input invalid");
                 }
