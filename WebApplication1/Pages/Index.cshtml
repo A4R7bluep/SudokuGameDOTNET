@@ -56,7 +56,7 @@
 <form method="post">
     <table id="board">
         <tr id="row1">
-            <td style="@Model.get_styles(0, 0)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="0" asp-route-spacey="0" value="@Model.board.get_nonet_value(0, 0)" /></td>
+            <td style="@Model.get_styles(0, 0)"><input class="@Model.add_class(0, 0)" type="submit" asp-page-handler="Popup" asp-route-spacex="0" asp-route-spacey="0" value="@Model.board.get_nonet_value(0, 0)" /></td>
             <td style="@Model.get_styles(0, 1)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="0" asp-route-spacey="1" value="@Model.board.get_nonet_value(0, 1)" /></td>
             <td style="@Model.get_styles(0, 2)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="0" asp-route-spacey="2" value="@Model.board.get_nonet_value(0, 2)" /></td>
             <td style="@Model.get_styles(0, 3)"><input type="submit" asp-page-handler="Popup" asp-route-spacex="0" asp-route-spacey="3" value="@Model.board.get_nonet_value(0, 3)" /></td>
@@ -206,6 +206,10 @@
         padding-bottom: 20px;
         padding-right: 25px;
         padding-left: 25px;
+    }
+
+    .blocked {
+        font-weight: bold;
     }
 
 </style>

@@ -25,7 +25,7 @@ namespace WebApplication1.Pages
         public static int inputSpaceX = -1;
         public static int inputSpaceY = -1;
 
-        bool boardSet = false;
+        static bool boardSet = false;
 
         /*
          * This is the C# that manages the data entered from the website
@@ -60,13 +60,30 @@ namespace WebApplication1.Pages
 
         public class Nonet
         {
-            // The Nonet class is embeded into the board. This separates the values by the 3x3 squares
+            // The Nonet Objects are embeded into the board. This separates the values by the 3x3 squares
 
             private int[,] area = {
                 {0, 0, 0}, //    1a, 2a, 3a
                 {0, 0, 0}, //    1b, 2b, 3b
                 {0, 0, 0}  //    1c, 2c, 3c
             };
+
+            private bool[,] blocked =
+            {
+                {false, false, false},
+                {false, false, false},
+                {false, false, false}
+            };
+
+            public void block_space(int spacex, int spacey)
+            {
+                blocked[spacex, spacey] = true;
+            }
+
+            public bool get_blocked_space(int spacex, int spacey)
+            {
+                return blocked[spacex, spacey];
+            }
 
             public void set_space_value(int spacex, int spacey, int value)
             {
@@ -221,12 +238,9 @@ namespace WebApplication1.Pages
 
                     switch (Convert.ToBoolean(random.Next(2)))
                     {
-                        case false:
-                            Console.WriteLine("Box blank");
-                            break;
-
                         case true:
                             currentNonet.set_space_value(row % 3, col % 3, random.Next(10));
+                            currentNonet.block_space(row % 3, col % 3);
                             break;
                     }
                 }
@@ -235,12 +249,27 @@ namespace WebApplication1.Pages
             }
         }
 
+        public string add_class(int spacex, int spacey)
+        {
+            Nonet currentNonet = board.get_nonet_space(spacex / 3, spacey / 3);
+
+            string value = "";
+
+            if (currentNonet.get_blocked_space(spacex / 3, spacey / 3))
+            {
+                value = "blocked";
+            }
+            
+            return value;
+        }
+
+        // Get Methods
         public void OnGet()
         {
             fill_board();
         }
 
-        /* Post Methods */
+        // Post Methods
 
         public void OnPostInput()
         {
@@ -278,10 +307,13 @@ namespace WebApplication1.Pages
 
         public void OnPostPopup(int spacex, int spacey)
         {
-            popupStyle = "display: block; ";
+            if (! board.get_nonet_space(spacex / 3, spacey / 3).get_blocked_space(spacex % 3, spacey % 3))
+            {
+                popupStyle = "display: block; ";
 
-            inputSpaceX = spacex;
-            inputSpaceY = spacey;
+                inputSpaceX = spacex;
+                inputSpaceY = spacey;
+            }
         }
 
         public void OnPostPopupCancel()
