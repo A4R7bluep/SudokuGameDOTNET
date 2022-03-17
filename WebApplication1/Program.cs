@@ -23,4 +23,4 @@ app.UseAuthorization();
 app.MapRazorPages();
 
 app.Run("https://localhost:7264");
-//app.Run("https://192.168.107.13:7264");
+//app.Run("https://192.168.107.22:7264");

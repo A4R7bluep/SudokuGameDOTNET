@@ -174,7 +174,6 @@ namespace WebApplication1.Pages
                     }
                 }
 
-                Console.WriteLine("Nonet move validity test result: " + valid);
                 return valid;
             }
 
@@ -196,7 +195,6 @@ namespace WebApplication1.Pages
                     }
                 }
 
-                Console.WriteLine("Row move validity test result: " + valid);
                 return valid;
             }
 
@@ -218,7 +216,6 @@ namespace WebApplication1.Pages
                     }
                 }
 
-                Console.WriteLine("Row move validity test result: " + valid);
                 return valid;
             }
         }
@@ -230,21 +227,28 @@ namespace WebApplication1.Pages
             if (!boardSet)
             {
                 for (int row = 0; row < 9; row++)
-            {
-                for (int col = 0; col < 9; col++)
                 {
-                    Nonet currentNonet = board.get_nonet_space(row / 3, col / 3);
-                    Random random = new Random();
-
-                    switch (Convert.ToBoolean(random.Next(2)))
+                    for (int col = 0; col < 9; col++)
                     {
-                        case true:
-                            currentNonet.set_space_value(row % 3, col % 3, random.Next(10));
-                            currentNonet.block_space(row % 3, col % 3);
-                            break;
+                        Nonet currentNonet = board.get_nonet_space(row / 3, col / 3);
+                        Random random = new Random();
+                        int randomValue = random.Next(10);
+
+                        switch (Convert.ToBoolean(random.Next(2)))
+                        {
+                            case true:
+                                switch (board.get_validity_nonet(currentNonet, randomValue) && board.get_validity_row(row, randomValue) && 
+                                    board.get_validity_column(col, randomValue))
+                                {
+                                    case true:
+                                        currentNonet.set_space_value(row % 3, col % 3, randomValue);
+                                        currentNonet.block_space(row % 3, col % 3);
+                                        break;
+                                }
+                                break;
+                        }
                     }
                 }
-            }
             boardSet = true;
             }
         }
@@ -293,11 +297,6 @@ namespace WebApplication1.Pages
                 {
                     board.get_nonet_space(inputSpaceX / 3, inputSpaceY / 3).set_space_value((inputSpaceX % 3), (inputSpaceY % 3), value);
                 }
-                else
-                {
-                    Console.WriteLine("Input invalid");
-                }
-                
             }
             catch (ArgumentNullException)
             {
