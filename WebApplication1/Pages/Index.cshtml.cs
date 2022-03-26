@@ -259,7 +259,7 @@ namespace WebApplication1.Pages
 
             string value = "";
 
-            if (currentNonet.get_blocked_space(spacex / 3, spacey / 3))
+            if (currentNonet.get_blocked_space(spacex % 3, spacey % 3))
             {
                 value = "blocked";
             }
