@@ -2,8 +2,6 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
-
-    
 }
 
 @functions {
@@ -12,6 +10,26 @@
     public string popupDisplay = "";
 
 }
+
+<!--
+    =========================================
+    Import CSS style sheets
+    =========================================
+-->
+
+<link href="~/css/Sudoku.css" rel="stylesheet"/>
+
+<!--
+    =========================================
+    Import HTML fonts
+
+    Lobster2
+    =========================================
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lobster+Two:ital@1&display=swap" rel="stylesheet">
 
 <!--
     =========================================
@@ -157,60 +175,3 @@
 
     </table>
 </form>
-
-<style>
-    table, td {
-        border: 1px solid black;
-    }
-
-    #popup {
-        display: none;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: 100;
-    }
-
-    #cancelButton {
-        display: block;
-        background-color: transparent;
-        margin-left: auto;
-        margin-right: auto;
-        border: 2px solid black;
-        margin-top: 100px;
-        border-radius: 5px;
-        color: white;
-    }
-
-    #inputTable {
-        margin-left: auto;
-        margin-right: auto;
-        margin-top: 100px;
-    }
-
-    #board input {
-        border: none;
-        background-color: inherit;
-        padding-top: 25px;
-        padding-bottom: 25px;
-        padding-right: 30px;
-        padding-left: 30px;
-        font-size: 14pt;
-    }
-
-    #inputTable td {
-        padding-top: 20px;
-        padding-bottom: 20px;
-        padding-right: 25px;
-        padding-left: 25px;
-    }
-
-    .blocked {
-        font-weight: bold;
-        font-size: 18pt;
-    }
-
-</style>
