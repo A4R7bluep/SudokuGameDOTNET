@@ -232,19 +232,39 @@ namespace WebApplication1.Pages
                     {
                         Nonet currentNonet = board.get_nonet_space(row / 3, col / 3);
                         Random random = new Random();
-                        int randomValue = random.Next(10);
 
                         switch (Convert.ToBoolean(random.Next(2)))
                         {
                             case true:
-                                switch (board.get_validity_nonet(currentNonet, randomValue) && board.get_validity_row(row, randomValue) && 
+                                /*switch (board.get_validity_nonet(currentNonet, randomValue) && board.get_validity_row(row, randomValue) && 
                                     board.get_validity_column(col, randomValue))
                                 {
                                     case true:
                                         currentNonet.set_space_value(row % 3, col % 3, randomValue);
                                         currentNonet.block_space(row % 3, col % 3);
                                         break;
+
+                                    case false:
+                                        continue;
                                 }
+                                break;*/
+
+                                bool done = false;
+
+                                while (!done)
+                                {
+                                    int randomValue = random.Next(10);
+
+                                    if (board.get_validity_nonet(currentNonet, randomValue) && board.get_validity_row(row, randomValue) &&
+                                    board.get_validity_column(col, randomValue))
+                                    {
+                                        currentNonet.set_space_value(row % 3, col % 3, randomValue);
+                                        currentNonet.block_space(row % 3, col % 3);
+                                    }
+
+                                    done = true;
+                                }
+
                                 break;
                         }
                     }

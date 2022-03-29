@@ -34,6 +34,7 @@ table, td {
     margin-left: auto;
     margin-right: auto;
     margin-top: 100px;
+    border: 5px solid black;
 }
 
 #board input {
@@ -48,13 +49,23 @@ table, td {
 }
 
 #inputTable td {
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 7px;
+    padding-bottom: 7px;
     padding-right: 25px;
     padding-left: 25px;
+    border: 5px solid black;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .blocked {
     font-weight: bold;
-    font-size: 18pt;
+    font-size: 24pt;
+}
+
+#inputTable p {
+    color: rgba(255, 255, 255, 1);
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    text-align: center;
 }
